@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:47:11 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 13:06:13 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:48:13 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,73 +25,53 @@ int	perror_return(const char *message, int return_value)
 	return (return_value);
 }
 
-// Split
-static size_t	count_words(char const *s, char c)
+// Ft_strjoin
+size_t	ft_strlen(char *string)
 {
-	size_t	words;
-	size_t	i;
-
-	words = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
-			words++;
-		i++;
-	}
-	return (words);
-}
-
-static void	fill_tab(char *new, char const *s, char c)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-	{
-		new[i] = s[i];
-		i++;
-	}
-	new[i] = '\0';
-}
-
-static void	set_mem(char **tab, char const *s, char c)
-{
-	size_t	count;
 	size_t	index;
-	size_t	i;
 
+	if (!string)
+		return (0);
 	index = 0;
-	i = 0;
-	while (s[index])
-	{
-		count = 0;
-		while (s[index + count] && s[index + count] != c)
-			count++;
-		if (count > 0)
-		{
-			tab[i] = malloc(sizeof(char) * (count + 1));
-			if (!tab[i])
-				return ;
-			fill_tab(tab[i], (s + index), c);
-			i++;
-			index = index + count;
-		}
-		else
-			index++;
-	}
-	tab[i] = 0;
+	while (string[index])
+		index++;
+	return (index);
 }
 
-char	**ft_split(char const *s, char c)
+char	*allocate_string(size_t size)
 {
-	size_t	words;
-	char	**tab;
+	char	*result;
 
-	words = count_words(s, c);
-	tab = malloc(sizeof(char *) * (words + 1));
-	if (!tab)
+	result = malloc(sizeof(char) * (size + 1));
+	if (!result)
 		return (NULL);
-	set_mem(tab, s, c);
-	return (tab);
+	result[size] = '\0';
+	return (result);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	size_t	s1_len;
+	size_t	s2_len;
+	char	*result;
+
+	if (!s1 && !s2)
+		return (allocate_string(0));
+	s1_len = 0;
+	s2_len = 0;
+	result = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!result)
+		return (NULL);
+	while (s1[s1_len])
+	{
+		result[s1_len] = s1[s1_len];
+		s1_len++;
+	}
+	while (s2[s2_len])
+	{
+		result[s1_len + s2_len] = s2[s2_len];
+		s2_len++;
+	}
+	result[s1_len + s2_len] = '\0';
+	return (result);
 }

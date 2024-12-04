@@ -6,7 +6,7 @@
 #    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2024/12/04 12:01:15 by eblancha         ###   ########.fr        #
+#    Updated: 2024/12/04 15:56:03 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -I$(INC)
 
-SRCS = pipex.c utils.c
+SRCS = pipex.c utils.c ft_split.c 
 
 INC = pipex.h
 
