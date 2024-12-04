@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:48:20 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 15:56:06 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:31:29 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,6 @@ static void	fill_tab(char *new, char const *s, char c)
 	new[i] = '\0';
 }
 
-static void	free_tab(char **tab)
-{
-	int	i;
-	
-	i = 0;
-    while (tab[i])
-        free(tab[i++]);
-    free(tab);
-}
-
 static void	set_mem(char **tab, char const *s, char c)
 {
 	size_t	count;
@@ -77,7 +67,6 @@ static void	set_mem(char **tab, char const *s, char c)
 			index++;
 	}
 	tab[i] = 0;
-	free_tab(tab);
 }
 
 char	**ft_split(char const *s, char c)

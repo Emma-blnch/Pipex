@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 15:56:06 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:26:32 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include <string.h>
 
 // Functions
 int		main(int argc, char **argv, char **envp);
@@ -27,7 +30,7 @@ void	create_pipe(char *file1, char *path_cmd1, char **cmd1,
 char	*parse_command(const char *cmd);
 char	**ft_split(char const *s, char c);
 char	*allocate_string(size_t size);
-char	*ft_strjoin(char *s1, char *s2);
-size_t	ft_strlen(char *string);
+char	*ft_strjoin(const char *s1, const char *s2);
+size_t	ft_strlen(const char *string);
 
 #endif

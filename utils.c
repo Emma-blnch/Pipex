@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:47:11 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 15:48:13 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:36:24 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,29 @@
 // perror messages
 void	perror_exit(const char *message)
 {
-	perror(message);
+	errno = 0;
+	if (errno != 0)
+		perror(message);
+	else
+		write(STDERR_FILENO, message, ft_strlen(message));
+	//errno = 0;
 	exit(EXIT_FAILURE);
 }
 
 int	perror_return(const char *message, int return_value)
 {
-	perror(message);
+	errno = 0;
+	if (errno != 0)
+		perror(message);
+	else
+		write(STDERR_FILENO, message, ft_strlen(message));
+
+	//errno = 0;
 	return (return_value);
 }
 
 // Ft_strjoin
-size_t	ft_strlen(char *string)
+size_t	ft_strlen(const char *string)
 {
 	size_t	index;
 
@@ -49,7 +60,7 @@ char	*allocate_string(size_t size)
 	return (result);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
 	size_t	s1_len;
 	size_t	s2_len;

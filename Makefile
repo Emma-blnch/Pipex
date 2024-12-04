@@ -6,7 +6,7 @@
 #    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2024/12/04 15:56:03 by eblancha         ###   ########.fr        #
+#    Updated: 2024/12/04 16:40:06 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,12 @@ $(NAME): $(OBJS)
 clean:
 	rm -f $(OBJS)
 
+clean_test:
+	rm -f outfile infile
+
 fclean: clean
 	rm -f $(NAME)
 
-re: clean fclean
+re: fclean all
 
 .PHONY: all clean fclean re
