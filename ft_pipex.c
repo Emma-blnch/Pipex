@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:46:59 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 17:26:53 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:41:24 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*parse_command(const char *cmd)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_pipe_args args;
+	t_pipe_args	args;
 
 	if (argc < 5)
 		return (perror_return("Usage: ./pipex file1 cmd1 cmd2 file2\n", 1));

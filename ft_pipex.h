@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 17:26:57 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:41:56 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ typedef struct s_pipe_args
 	char	*path_cmd1;
 	char	*file2;
 	char	**envp;
-} t_pipe_args;
+}	t_pipe_args;
 
 // Functions
 int		main(int argc, char **argv, char **envp);
 int		perror_return(const char *message, int return_value);
 void	perror_exit(const char *message);
 void	create_pipe(t_pipe_args *args);
-void    execute_command(int infile, int outfile, t_pipe_args *args);
-void    child_process_1(t_pipe_args *args, int pipe_fd[2]);
-void    child_process_2(t_pipe_args *args, int pipe_fd[2]);
+void	execute_command(int infile, int outfile, t_pipe_args *args);
+void	child_process_1(t_pipe_args *args, int pipe_fd[2]);
+void	child_process_2(t_pipe_args *args, int pipe_fd[2]);
 char	*parse_command(const char *cmd);
 char	**ft_split(char const *s, char c);
 char	*allocate_string(size_t size);
