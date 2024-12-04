@@ -6,11 +6,11 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:48:20 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 16:31:29 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:52:25 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "ft_pipex.h"
 
 static size_t	count_words(char const *s, char c)
 {
