@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:46:59 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 16:34:31 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:42:57 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*parse_command(const char *cmd)
 {
-	char	*dir[] = {"/bin", "/user/bin", NULL};
+	char	*dir[] = {"/bin", "/user/bin", NULL};;
 	char	*full_path;
 	char	*temp_path;
 	int		i;
