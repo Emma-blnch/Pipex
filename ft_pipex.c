@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		return (perror_return("Error: invalid command\n", 1));
 	}
 	args.envp = envp;
-	if (!envp || !*envp)
+	if (!args.envp)
 		return (perror_return("Error: Environment is missing", 1));
 	create_pipe(&args);
 	free(args.path_cmd1);
