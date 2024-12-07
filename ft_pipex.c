@@ -30,6 +30,8 @@ char	*parse_command(const char *cmd)
 		free(full_path);
 		i++;
 	}
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, ": command not found\n", 20);
 	return (NULL);
 }
 
