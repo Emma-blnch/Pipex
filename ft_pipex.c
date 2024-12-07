@@ -31,7 +31,7 @@ char	*parse_command(const char *cmd)
 		i++;
 	}
 	write(STDERR_FILENO, cmd, ft_strlen(cmd));
-	write(STDERR_FILENO, ": command not found\n", 20);
+	write(STDERR_FILENO, ": command not found", 20);
 	return (NULL);
 }
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipe_args	args;
 
 	if (argc < 5)
-		return (perror_return("Usage: ./pipex file1 cmd1 cmd2 file2\n", 1));
+		return (perror_return("Usage: ./pipex file1 cmd1 cmd2 file2", 1));
 	if (access(argv[1], R_OK) == -1)
 		return (perror_return(strerror(errno), 1));
 	args.file1 = argv[1];
@@ -48,14 +48,14 @@ int	main(int argc, char **argv, char **envp)
 	args.cmd1 = ft_split(argv[2], ' ');
 	args.cmd2 = ft_split(argv[3], ' ');
 	if (!args.cmd1 || !args.cmd2)
-		return (perror_return("Error: Command parsing failed\n", 1));
+		return (perror_return("Error: Command parsing failed", 1));
 	args.path_cmd1 = parse_command(args.cmd1[0]);
 	args.path_cmd2 = parse_command(args.cmd2[0]);
 	if (!args.path_cmd1 || !args.path_cmd2)
 	{
 		free(args.path_cmd1);
 		free(args.path_cmd2);
-		return (perror_return("Error: invalid command\n", 1));
+		return (perror_return("Error: invalid command", 1));
 	}
 	args.envp = envp;
 	create_pipe(&args);
