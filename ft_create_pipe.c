@@ -21,10 +21,7 @@ void	execute_command(int infile, int outfile, t_pipe_args *args)
 	close(infile);
 	close(outfile);
 	execve(args->path_cmd, args->cmd, args->envp);
-	if (errno == ENOENT)
-		exit(127);
-	else
-		perror_exit("Error: execve failed\n");
+	perror_exit("Error: execve failed\n");
 }
 
 void	child_process_1(t_pipe_args *args, int pipe_fd[2])
