@@ -69,12 +69,18 @@ void	create_pipe(t_pipe_args *args)
 	if (pid1 == -1)
 		perror_exit("Error: Fork creation failed\n");
 	if (pid1 == 0)
+	{
 		child_process_1(args, pipe_fd);
+		exit(0);
+	}
 	pid2 = fork();
 	if (pid2 == -1)
 		perror_exit("Error: Fork creation failed\n");
 	if (pid2 == 0)
+	{
 		child_process_2(args, pipe_fd);
+		exit(0);
+	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	wait(NULL);
