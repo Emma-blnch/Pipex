@@ -14,11 +14,11 @@ NAME = pipex
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I$(INC)
+CFLAGS = -Wall -Wextra -Werror #-I$(INC)
 
 SRCS = ft_pipex.c ft_pipex_utils.c ft_split.c ft_create_pipe.c
 
-INC = ft_pipex.h
+#INC = ft_pipex.h
 
 OBJS = $(SRCS:.c=.o)
 
