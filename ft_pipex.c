@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 5)
 		return (perror_return("Usage: ./pipex file1 cmd1 cmd2 file2\n", 1));
 	if (access(argv[1], R_OK) == -1)
-		return (perror_return("Error: File cannot be read\n", 1));
+		return (perror_return(strerror(errno), 1));
 	args.file1 = argv[1];
 	args.file2 = argv[4];
 	args.cmd1 = ft_split(argv[2], ' ');
