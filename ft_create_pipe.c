@@ -31,7 +31,12 @@ void	child_process_1(t_pipe_args *args, int pipe_fd[2])
 	args->path_cmd = args->path_cmd1;
 	args->cmd = args->cmd1;
 	if (!args->path_cmd)
-		perror_exit("Error: wrong command");
+	{
+		write(STDERR_FILENO, args->cmd[0], ft_strlen(args->cmd[0]));
+		write(STDERR_FILENO, ": command not found\n", 20);
+		exit(127);
+	}
+	//perror_exit("Error: wrong command");
 	infile = open(args->file1, O_RDONLY);
 	if (infile == -1)
 		perror_exit("Error: cannot open file1");
