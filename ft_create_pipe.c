@@ -51,8 +51,8 @@ void	child_process_2(t_pipe_args *args, int pipe_fd[2])
 	if (outfile == -1)
 	{
 		write(STDERR_FILENO, args->file2, ft_strlen(args->file2));
-   		perror(" ");
-    		exit(EXIT_FAILURE);
+		perror(" ");
+		exit(EXIT_FAILURE);
 	}
 	//perror_exit("Error: cannot write in file2");
 	close(pipe_fd[1]);
