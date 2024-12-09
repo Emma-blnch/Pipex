@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:20:39 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:52:20 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ int		open_file(char *file, int in_or_out);
 void	perror_exit(const char *message);
 void	create_pipe(t_pipe_args *args);
 void	execute_command(t_pipe_args *args, int infile, int outfile);
+void	launch_process(t_pipe_args *args, int infile, int outfile,
+			int is_first_cmd);
 void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd);
 char	*get_path(const char *cmd, char **envp);
-// char	**ft_split(char const *s, char c);
-// char	*allocate_string(size_t size);
-// char	*ft_strjoin(const char *s1, const char *s2);
-// size_t	ft_strlen(const char *string);
+char	*build_full_path(const char *path, const char *cmd);
 
 #endif
