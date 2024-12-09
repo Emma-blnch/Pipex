@@ -6,11 +6,11 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 11:52:25 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:31:44 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "../ft_pipex.h"
 
 void	execute_command(t_pipe_args *args, int infile, int outfile)
 {
