@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:07:57 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:15:27 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-void	execute_command(int infile, int outfile, t_pipe_args *args)
+void	execute_command(t_pipe_args *args, int infile, int outfile)
 {
 	if (dup2(infile, STDIN_FILENO) == -1)
 		perror_exit("dup2 failed for infile");
@@ -67,7 +67,7 @@ void	create_pipe(t_pipe_args *args)
 	int	infile;
 	int	outfile;
 
-	if (piped(pipe_fd) == -1)
+	if (pipe(pipe_fd) == -1)
 		perror_exit("Error: Pipe creation failed");
 	pid = fork();
 	if (pid == -1)

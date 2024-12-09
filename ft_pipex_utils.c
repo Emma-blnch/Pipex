@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:08:45 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:13:26 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ char *get_path(const char *cmd, char **envp)
         free(temp_path);
         if (access(full_path, X_OK) == 0)
         {
-            free_tab(paths);
+            free(paths);
             return (full_path);
         }
         free(full_path);
     }
-    free_tab(paths);
-    return (cmd);
+    free(paths);
+    return (NULL);
 }
