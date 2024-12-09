@@ -6,14 +6,13 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:08:39 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:41:56 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PIPEX_H
 # define FT_PIPEX_H
 
-# include "libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -45,9 +44,9 @@ void	execute_command(int infile, int outfile, t_pipe_args *args);
 void	child_process_1(t_pipe_args *args, int pipe_fd[2]);
 void	child_process_2(t_pipe_args *args, int pipe_fd[2]);
 char	*parse_command(const char *cmd);
-// char	**ft_split(char const *s, char c);
-// char	*allocate_string(size_t size);
-// char	*ft_strjoin(const char *s1, const char *s2);
-// size_t	ft_strlen(const char *string);
+char	**ft_split(char const *s, char c);
+char	*allocate_string(size_t size);
+char	*ft_strjoin(const char *s1, const char *s2);
+size_t	ft_strlen(const char *string);
 
 #endif

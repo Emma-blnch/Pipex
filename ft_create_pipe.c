@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 17:42:09 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/04 17:47:37 by eblancha         ###   ########.fr       */
+/*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
+/*   Updated: 2024/12/09 10:07:57 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,68 +15,78 @@
 void	execute_command(int infile, int outfile, t_pipe_args *args)
 {
 	if (dup2(infile, STDIN_FILENO) == -1)
-		perror_exit("dup2 failed");
+		perror_exit("dup2 failed for infile");
 	if (dup2(outfile, STDOUT_FILENO) == -1)
-		perror_exit("Error: dup2 output_fd failed\n");
+		perror_exit("dup2 failed for outfile");
 	close(infile);
 	close(outfile);
 	execve(args->path_cmd, args->cmd, args->envp);
-	perror_exit("Error: execve failed");
+	write(STDERR_FILENO, args->cmd[0], ft_strlen(args->cmd[0]));
+    write(STDERR_FILENO, ": command not found\n", 20);
+    exit(127);
 }
 
-void	child_process_1(t_pipe_args *args, int pipe_fd[2])
+void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd)
 {
-	int	infile;
-
-	args->path_cmd = args->path_cmd1;
-	args->cmd = args->cmd1;
-	if (!args->path_cmd)
-		perror_exit("Error: command not found");
-	infile = open(args->file1, O_RDONLY);
-	if (infile == -1)
-		perror_exit("Error: cannot open file1");
-	close(pipe_fd[0]);
-	execute_command(infile, pipe_fd[1], args);
-}
-
-void	child_process_2(t_pipe_args *args, int pipe_fd[2])
-{
-	int	outfile;
-
-	args->path_cmd = args->path_cmd2;
-	args->cmd = args->cmd2;
-	if (!args->path_cmd)
-		perror_exit("Error: command not found");
-	outfile = open(args->file2, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (outfile == -1)
+	if (is_first_cmd)
 	{
-		write(STDERR_FILENO, args->file2, ft_strlen(args->file2));
-		perror(" ");
-		exit(EXIT_FAILURE);
+		args->path_cmd = args->path_cmd1;
+		args->cmd = args->cmd1;
 	}
-	//perror_exit("Error: cannot write in file2");
-	close(pipe_fd[1]);
-	execute_command(pipe_fd[0], outfile, args);
+	else
+	{
+		args->path_cmd = args->path_cmd2;
+		args->cmd = args->cmd2;
+	}
+	if (!args->path_cmd)
+	{
+		write(STDERR_FILENO, args->cmd[0], ft_strlen(args->cmd[0]));
+ 		write(STDERR_FILENO, ": command not found\n", 20);
+ 		exit(127);
+	}
+	execute_command(args, infile, outfile);
+}
+
+int	open_file(char *file, int in_or_out)
+{
+	int	ret;
+
+	if (in_or_out == 0)
+		ret = open(file, O_RDONLY, 0777);
+	if (in_or_out == 1)
+		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (ret == -1)
+		exit(0);
+	return (ret);
 }
 
 void	create_pipe(t_pipe_args *args)
 {
 	int	pipe_fd[2];
-	int	pid1;
-	int	pid2;
+	int	pid;
+	int	infile;
+	int	outfile;
 
-	if (pipe(pipe_fd) == -1)
+	if (piped(pipe_fd) == -1)
 		perror_exit("Error: Pipe creation failed");
-	pid1 = fork();
-	if (pid1 == -1)
+	pid = fork();
+	if (pid == -1)
 		perror_exit("Error: Fork creation failed");
-	if (pid1 == 0)
-		child_process_1(args, pipe_fd);
-	pid2 = fork();
-	if (pid2 == -1)
+	if (pid == 0)
+	{
+		infile = open_file(args->file1, 0);
+		close(pipe_fd[0]);
+		child(args, infile, pipe_fd[1], 1);
+	}
+	pid = fork();
+	if (pid == -1)
 		perror_exit("Error: Fork creation failed");
-	if (pid2 == 0)
-		child_process_2(args, pipe_fd);
+	if (pid == 0)
+	{
+		outfile = open_file(args->file2, 1);
+		close(pipe_fd[1]);
+		child(args, outfile, pipe_fd[0], 0);
+	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	wait(NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:08:45 by eblancha         ###   ########.fr       */
+/*   Created: 2024/12/04 11:47:11 by eblancha          #+#    #+#             */
+/*   Updated: 2024/12/04 17:24:12 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,53 @@ int	perror_return(const char *message, int return_value)
 	return (return_value);
 }
 
-char *get_path(const char *cmd, char **envp)
+// Ft_strjoin
+size_t	ft_strlen(const char *string)
 {
-    char **paths;
-    char *full_path;
-    char *temp_path;
-    int i;
+	size_t	index;
 
-    while (*envp && ft_strncmp(*envp, "PATH=", 5) != 0)
-        envp++;
-    if (!*envp)
-        return (NULL);
-    paths = ft_split(*envp + 5, ':');
-    if (!paths)
-        return (NULL);
-    i = 0;
-    while (paths[++i])
-    {
-        temp_path = ft_strjoin(paths[i], "/");
-        full_path = ft_strjoin(temp_path, cmd);
-        free(temp_path);
-        if (access(full_path, X_OK) == 0)
-        {
-            free_tab(paths);
-            return (full_path);
-        }
-        free(full_path);
-    }
-    free_tab(paths);
-    return (cmd);
+	if (!string)
+		return (0);
+	index = 0;
+	while (string[index])
+		index++;
+	return (index);
+}
+
+char	*allocate_string(size_t size)
+{
+	char	*result;
+
+	result = malloc(sizeof(char) * (size + 1));
+	if (!result)
+		return (NULL);
+	result[size] = '\0';
+	return (result);
+}
+
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	size_t	s1_len;
+	size_t	s2_len;
+	char	*result;
+
+	if (!s1 && !s2)
+		return (allocate_string(0));
+	s1_len = 0;
+	s2_len = 0;
+	result = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!result)
+		return (NULL);
+	while (s1[s1_len])
+	{
+		result[s1_len] = s1[s1_len];
+		s1_len++;
+	}
+	while (s2[s2_len])
+	{
+		result[s1_len + s2_len] = s2[s2_len];
+		s2_len++;
+	}
+	result[s1_len + s2_len] = '\0';
+	return (result);
 }

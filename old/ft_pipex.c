@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 10:08:02 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:08:04 by eblancha         ###   ########.fr       */
+/*   Created: 2024/12/04 11:46:59 by eblancha          #+#    #+#             */
+/*   Updated: 2024/12/04 17:41:24 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
+
+char	*parse_command(const char *cmd)
+{
+	const char	*dir[] = {"/bin", "/user/bin", NULL};
+	char		*full_path;
+	char		*temp_path;
+	int			i;
+
+	i = 0;
+	while (dir[i])
+	{
+		temp_path = ft_strjoin(dir[i], "/");
+		full_path = ft_strjoin(temp_path, cmd);
+		free(temp_path);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		free(full_path);
+		i++;
+	}
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, ": command not found", 20);
+	return (NULL);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -26,8 +49,8 @@ int	main(int argc, char **argv, char **envp)
 	args.cmd2 = ft_split(argv[3], ' ');
 	if (!args.cmd1 || !args.cmd2)
 		return (perror_return("Error: Command parsing failed", 1));
-	args.path_cmd1 = get_path(args.cmd1[0], envp);
-	args.path_cmd2 = get_path(args.cmd2[0], envp);
+	args.path_cmd1 = parse_command(args.cmd1[0]);
+	args.path_cmd2 = parse_command(args.cmd2[0]);
 	if (!args.path_cmd1 || !args.path_cmd2)
 	{
 		free(args.path_cmd1);
