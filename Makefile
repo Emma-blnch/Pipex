@@ -6,7 +6,7 @@
 #    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2024/12/09 10:04:41 by eblancha         ###   ########.fr        #
+#    Updated: 2024/12/09 12:22:48 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = ft_pipex.c ft_pipex_utils.c ft_create_pipe.c libft/libft.a
+SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c libft/libft.a
 
 OBJS = $(SRCS:.c=.o)
 
