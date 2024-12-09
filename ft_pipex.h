@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:14:35 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:20:39 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_pipe_args
 // Functions
 int		main(int argc, char **argv, char **envp);
 int		perror_return(const char *message, int return_value);
-int	open_file(char *file, int in_or_out);
+int		open_file(char *file, int in_or_out);
 void	perror_exit(const char *message);
 void	create_pipe(t_pipe_args *args);
 void	execute_command(t_pipe_args *args, int infile, int outfile);

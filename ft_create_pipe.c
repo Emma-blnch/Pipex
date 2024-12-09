@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:15:27 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:18:24 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	execute_command(t_pipe_args *args, int infile, int outfile)
 	close(outfile);
 	execve(args->path_cmd, args->cmd, args->envp);
 	write(STDERR_FILENO, args->cmd[0], ft_strlen(args->cmd[0]));
-    write(STDERR_FILENO, ": command not found\n", 20);
-    exit(127);
+	write(STDERR_FILENO, ": command not found\n", 20);
+	exit(127);
 }
 
 void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd)
@@ -41,8 +41,8 @@ void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd)
 	if (!args->path_cmd)
 	{
 		write(STDERR_FILENO, args->cmd[0], ft_strlen(args->cmd[0]));
- 		write(STDERR_FILENO, ": command not found\n", 20);
- 		exit(127);
+		write(STDERR_FILENO, ": command not found\n", 20);
+		exit(127);
 	}
 	execute_command(args, infile, outfile);
 }
