@@ -6,26 +6,26 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:02 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 12:31:51 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:43:29 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_pipex.h"
 
-void free_split(char **split)
+void	free_split(char **split)
 {
-    int i;
-	
+	int	i;
+
 	i = 0;
-    if (!split)
-        return ;
-    while (split[i])
-    {
-        free(split[i]);
+	if (!split)
+		return ;
+	while (split[i])
+	{
+		free(split[i]);
 		split[i] = NULL;
-        i++;
-    }
-    free(split);
+		i++;
+	}
+	free(split);
 	split = NULL;
 }
 
@@ -63,14 +63,6 @@ int	main(int argc, char **argv, char **envp)
 	if (access(argv[1], R_OK) == -1)
 		return (perror_return(strerror(errno), 1));
 	init_args(&args, argv, envp);
-	// if (!args.path_cmd1 || !args.path_cmd2)
-	// {
-	// 	free(args.path_cmd1);
-	// 	free(args.path_cmd2);
-	// 	free_split(args.cmd1);
-	// 	free_split(args.cmd2);
-	// 	return (perror_return("Error: invalid command", 1));
-	// }
 	create_pipe(&args);
 	free(args.path_cmd1);
 	free(args.path_cmd2);

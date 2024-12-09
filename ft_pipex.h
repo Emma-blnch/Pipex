@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 12:09:11 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:43:42 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		perror_return(const char *message, int return_value);
 int		open_file(char *file, int in_or_out);
 void	perror_exit(const char *message);
 void	create_pipe(t_pipe_args *args);
-void free_split(char **split);
+void	free_split(char **split);
 void	init_args(t_pipe_args *args, char **argv, char **envp);
 void	execute_command(t_pipe_args *args, int infile, int outfile);
 void	launch_process(t_pipe_args *args, int infile, int outfile,
