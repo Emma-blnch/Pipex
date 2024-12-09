@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 11:20:12 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:58:07 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ char	*get_path(const char *cmd, char **envp)
 		full_path = build_full_path(paths[i], cmd);
 		if (access(full_path, X_OK) == 0)
 		{
-			free(paths);
+			free_split(paths);
 			return (full_path);
 		}
 		free(full_path);
 		i++;
 	}
-	free(paths);
+	free_split(paths);
 	return (NULL);
 }

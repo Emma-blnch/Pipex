@@ -3,81 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:25:20 by eblancha          #+#    #+#             */
-/*   Updated: 2024/11/14 13:29:39 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:56:57 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	count_words(char const *s, char c)
+static int	count_words(const char *str, char c)
 {
-	size_t	words;
-	size_t	i;
-
-	words = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
-			words++;
-		i++;
-	}
-	return (words);
-}
-
-static void	fill_tab(char *new, char const *s, char c)
-{
-	size_t	i;
+	int i;
+	int trigger;
 
 	i = 0;
-	while (s[i] && s[i] != c)
+	trigger = 0;
+	while (*str)
 	{
-		new[i] = s[i];
-		i++;
-	}
-	new[i] = '\0';
-}
-
-static void	set_mem(char **tab, char const *s, char c)
-{
-	size_t	count;
-	size_t	index;
-	size_t	i;
-
-	index = 0;
-	i = 0;
-	while (s[index])
-	{
-		count = 0;
-		while (s[index + count] && s[index + count] != c)
-			count++;
-		if (count > 0)
+		if (*str != c && trigger == 0)
 		{
-			tab[i] = malloc(sizeof(char) * (count + 1));
-			if (!tab[i])
-				return ;
-			fill_tab(tab[i], (s + index), c);
+			trigger = 1;
 			i++;
-			index = index + count;
 		}
-		else
-			index++;
+		else if (*str == c)
+			trigger = 0;
+		str++;
 	}
-	tab[i] = 0;
+	return (i);
 }
 
-char	**ft_split(char const *s, char c)
+static char	*word_dup(const char *str, int start, int finish)
 {
-	size_t	words;
-	char	**tab;
+	char	*word;
+	int		i;
 
-	words = count_words(s, c);
-	tab = malloc(sizeof(char *) * (words + 1));
-	if (!tab)
+	i = 0;
+	word = malloc((finish - start + 1) * sizeof(char));
+	while (start < finish)
+		word[i++] = str[start++];
+	word[i] = '\0';
+	return (word);
+}
+
+char		**ft_split(char const *s, char c)
+{
+	size_t	i;
+	size_t	j;
+	int		index;
+	char	**split;
+
+	split = malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!s || !split)
 		return (NULL);
-	set_mem(tab, s, c);
-	return (tab);
+	i = 0;
+	j = 0;
+	index = -1;
+	while (i <= ft_strlen(s))
+	{
+		if (s[i] != c && index < 0)
+			index = i;
+		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
+		{
+			split[j++] = word_dup(s, index, i);
+			index = -1;
+		}
+		i++;
+	}
+	split[j] = 0;
+	return (split);
 }
