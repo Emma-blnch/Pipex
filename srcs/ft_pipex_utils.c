@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 12:31:47 by eblancha         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:45:50 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	perror_return(const char *message, int return_value)
 	return (return_value);
 }
 
+// get path to command
 char	*build_full_path(const char *path, const char *cmd)
 {
 	char	*temp_path;
