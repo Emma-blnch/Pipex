@@ -16,29 +16,34 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c libft/libft.a
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
+
+SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c
 
 OBJS = $(SRCS:.c=.o)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $(@)
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
 
-$(NAME): 
-	make all -C libft
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+$(NAME): $(OBJS) 
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -o $(NAME)
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
 
 clean:
 	rm -f $(OBJS)
-	make clean -C libft
+	make clean -C $(LIBFT_DIR)
 
 clean_test:
 	rm -f outfile infile
 
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C libft
+	make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
