@@ -6,14 +6,13 @@
 #    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2024/12/09 12:22:48 by eblancha         ###   ########.fr        #
+#    Updated: 2025/01/15 16:28:59 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
 CC = cc
-
 CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_DIR = libft
@@ -24,12 +23,12 @@ SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c
 OBJS = $(SRCS:.c=.o)
 
 .c.o:
-	$(CC) $(CFLAGS) -c $< -o $(@)
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJS) 
-	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lm -o $(NAME)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)

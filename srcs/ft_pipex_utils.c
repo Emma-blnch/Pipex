@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 12:45:50 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:54:04 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 // perror messages
 void	perror_exit(const char *message)
 {
-	errno = 0;
 	if (errno != 0)
 		perror(message);
 	else
 		write(STDERR_FILENO, message, ft_strlen(message));
+	errno = 0;
 	exit(EXIT_FAILURE);
 }
 
 int	perror_return(const char *message, int return_value)
 {
-	errno = 0;
 	if (errno != 0)
 		perror(message);
 	else
 		write(STDERR_FILENO, message, ft_strlen(message));
+	errno = 0;
 	return (return_value);
 }
 

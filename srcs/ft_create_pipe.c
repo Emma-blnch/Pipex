@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 12:46:53 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:55:37 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	execute_command(t_pipe_args *args, int infile, int outfile)
 {
 	if (dup2(infile, STDIN_FILENO) == -1)
-		perror_exit("dup2 failed for infile\n");
+		perror_exit("Error: dup2 failed for infile");
 	if (dup2(outfile, STDOUT_FILENO) == -1)
-		perror_exit("dup2 failed for outfile\n");
+		perror_exit("Error: dup2 failed for outfile");
 	close(infile);
 	close(outfile);
 	execve(args->path_cmd, args->cmd, args->envp);
@@ -74,7 +74,7 @@ void	launch_process(t_pipe_args *args, int infile, int outfile,
 	if (pid == 0)
 	{
 		if (infile < 0 || outfile < 0)
-			perror_exit("Error: Invalid file descriptor\n");
+			perror_exit("Error: Invalid file descriptor");
 		child(args, infile, outfile, is_first_cmd);
 	}
 }
