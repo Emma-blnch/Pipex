@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/15 16:55:37 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:14:33 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd)
 	{
 		write(STDERR_FILENO, args->cmd[0], ft_strlen(args->cmd[0]));
 		write(STDERR_FILENO, ": command not found\n", 20);
-		free(args->cmd);
+		free_split(args->cmd);
 		exit(127);
 	}
 	execute_command(args, infile, outfile);

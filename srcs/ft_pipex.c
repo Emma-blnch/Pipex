@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:02 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/15 16:52:12 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:14:18 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,6 @@ void	init_args(t_pipe_args *args, char **argv, char **envp)
 	}
 	args->path_cmd1 = get_path(args->cmd1[0], envp);
 	args->path_cmd2 = get_path(args->cmd2[0], envp);
-	if (!args->path_cmd1 || !args->path_cmd2)
-	{
-		free(args->path_cmd1);
-		free(args->path_cmd2);
-		free_split(args->cmd1);
-		free_split(args->cmd2);
-		perror_exit("Error: invalid command");
-	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -70,3 +62,30 @@ int	main(int argc, char **argv, char **envp)
 	free_split(args.cmd2);
 	return (0);
 }
+
+
+//
+// void	init_args(t_pipe_args *args, char **argv, char **envp)
+// {
+// 	args->file1 = argv[1];
+// 	args->file2 = argv[4];
+// 	args->cmd1 = ft_split(argv[2], ' ');
+// 	args->cmd2 = ft_split(argv[3], ' ');
+// 	args->envp = envp;
+// 	if (!args->cmd1 || !args->cmd2)
+// 	{
+// 		free_split(args->cmd1);
+// 		free_split(args->cmd2);
+// 		perror_exit("Error: Command parsing failed");
+// 	}
+// 	args->path_cmd1 = get_path(args->cmd1[0], envp);
+// 	args->path_cmd2 = get_path(args->cmd2[0], envp);
+// 	// if (!args->path_cmd1 || !args->path_cmd2)
+// 	// {
+// 	// 	free(args->path_cmd1);
+// 	// 	free(args->path_cmd2);
+// 	// 	free_split(args->cmd1);
+// 	// 	free_split(args->cmd2);
+// 	// 	perror_exit("Error: invalid command");
+// 	// }
+// }

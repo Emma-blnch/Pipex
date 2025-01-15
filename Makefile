@@ -6,7 +6,7 @@
 #    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2025/01/15 16:28:59 by eblancha         ###   ########.fr        #
+#    Updated: 2025/01/15 17:13:41 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ clean:
 	make clean -C $(LIBFT_DIR)
 
 clean_test:
-	rm -f outfile infile
+	rm -f outfile infile empty
 
 fclean: clean
 	rm -f $(NAME)
