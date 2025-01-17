@@ -11,9 +11,9 @@ Recode the pipe mechanism.
 > This project will let you discover in detail a UNIX mechanism that you already know by using it in your program.
 
 ## 📥 **What I learned**
-With this project, I learned how to manage files on various modes (read, write, create, truncate). I discovered the creation of processes with fork() and the communications between processes with pipe().
+With this project, I learned how to *manage files* on various modes (read, write, create, truncate). I discovered the creation of processes with fork() and the communications between processes with pipe().
 
-I learned to have robust error handling with custom messages.
+I learned to have **robust error handling** with custom messages.
 
 ## ⚙️ **Requirements**
 The functions must be written in C. It must compile with clang and the following flags :
