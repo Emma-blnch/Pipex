@@ -1,6 +1,3 @@
-bonus to do
-
-
 <h1 align="center"> 💻 <strong>Pipex</strong> </h1>
 
 ## 🏷️ **About the project**
