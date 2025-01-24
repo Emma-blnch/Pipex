@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:02 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/15 17:14:18 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/23 09:49:43 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	main(int argc, char **argv, char **envp)
 	free_split(args.cmd2);
 	return (0);
 }
-
 
 //
 // void	init_args(t_pipe_args *args, char **argv, char **envp)
