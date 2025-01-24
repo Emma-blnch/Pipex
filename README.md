@@ -2,9 +2,7 @@
 
 ## 🏷️ **About the project**
 > [!IMPORTANT]
-> 6th project of the 42 cursus.
-> 
-> *Level 2*
+> 6th project of the 42 cursus.➡️ *Level 2*
 
 Recode the pipe mechanism.
 
