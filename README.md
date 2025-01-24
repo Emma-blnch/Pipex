@@ -1,22 +1,20 @@
 <h1 align="center"> 💻 <strong>Pipex</strong> </h1>
 
 ## 🏷️ **About the project**
-> This project will let you discover in detail a UNIX mechanism that you already know by using it in your program.
+> [!IMPORTANT]
+> 6th project of the 42 cursus. Level 2.
 
 Recode the pipe mechanism.
 
-> This project will let you discover in detail a UNIX mechanism that you already know by using it in your program.
-
 ## 📥 **What I learned**
-With this project, I learned how to *manage files* on various modes (read, write, create, truncate). I discovered the creation of processes with fork() and the communications between processes with pipe().
+With this project, I developed my:
+- [ ] Polyvalence (efficient use of system commands).
+- [ ] Logical thinking (analyze the steps involved in executing a command chain).
 
-I learned to have **robust error handling** with custom messages.
-
-## ⚙️ **Requirements**
-The functions must be written in C. It must compile with clang and the following flags :
-- -Wall
-- -Wextra
-- -Werror
+## ⚙️ **Technical skills I acquired**
+- [x] Process creation and management
+- [x] Robust error handling (with custom messages)
+- [x] Unix system programming (using pipes to redirect flows between processes)
 
 ## 📁 **My files**
 <ins>Pipex.c</ins> : Contains the main function. Initializes arguments, checks their validity, and triggers the operations required to execute the Pipex program.
@@ -24,11 +22,3 @@ The functions must be written in C. It must compile with clang and the following
 <ins>Pipex_utils.c</ins> : Manages memory, command path finding and errors.
 
 <ins>Create_pipe.c</ins> : Contains the logic to create the pipe used between cmd1 and cmd2.
-
-## 📍 **Bonus**
-What to do for the bonus part:
-- [x] Handle multiple pipes.
-- [x] Support « and » when the first parameter is "here_doc".
-
-## ♻️ **Testing**
-I strongly recommand you test each function you do *separatly* to make sure everything works fine **before** putting it together (it will help you debug).
