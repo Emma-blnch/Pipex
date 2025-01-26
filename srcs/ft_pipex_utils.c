@@ -6,31 +6,27 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/15 16:54:04 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/26 12:04:27 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_pipex.h"
 
-// perror messages
-void	perror_exit(const char *message)
+void	init_args(t_pipe_args *args, char **argv, char **envp)
 {
-	if (errno != 0)
-		perror(message);
-	else
-		write(STDERR_FILENO, message, ft_strlen(message));
-	errno = 0;
-	exit(EXIT_FAILURE);
-}
-
-int	perror_return(const char *message, int return_value)
-{
-	if (errno != 0)
-		perror(message);
-	else
-		write(STDERR_FILENO, message, ft_strlen(message));
-	errno = 0;
-	return (return_value);
+	args->file1 = argv[1];
+	args->file2 = argv[4];
+	args->cmd1 = ft_split(argv[2], ' ');
+	args->cmd2 = ft_split(argv[3], ' ');
+	args->envp = envp;
+	if (!args->cmd1 || !args->cmd2)
+	{
+		free_split(args->cmd1);
+		free_split(args->cmd2);
+		perror_exit("Error: Command parsing failed");
+	}
+	args->path_cmd1 = get_path(args->cmd1[0], envp);
+	args->path_cmd2 = get_path(args->cmd2[0], envp);
 }
 
 // get path to command
