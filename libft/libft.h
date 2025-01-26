@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:44:30 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 10:02:51 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/26 17:03:21 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <string.h>
 # include <stdlib.h>
 # include <fcntl.h>
+
+# include "get_next_line/get_next_line.h"
 
 int		ft_atoi(const char *nptr);
 int		ft_isalnum(int c);

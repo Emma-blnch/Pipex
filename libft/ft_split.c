@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:25:20 by eblancha          #+#    #+#             */
-/*   Updated: 2024/12/09 12:42:18 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/09 10:07:07 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static char	*word_dup(const char *str, int start, int finish)
 
 	i = 0;
 	word = malloc((finish - start + 1) * sizeof(char));
+	if (!word)
+		return (NULL);
 	while (start < finish)
 		word[i++] = str[start++];
 	word[i] = '\0';

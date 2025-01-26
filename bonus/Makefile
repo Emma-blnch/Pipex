@@ -6,7 +6,7 @@
 #    By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2025/01/26 16:49:38 by ema_blnch        ###   ########.fr        #
+#    Updated: 2025/01/26 16:51:11 by ema_blnch        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,11 @@ CFLAGS = -Wall -Wextra -Werror
 MAKEFLAGS += --no-print-directory
 $(VERBOSE).SILENT:
 
-LIBFT_DIR = libft
+LIBFT_DIR = ../libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c srcs/ft_free.c srcs/ft_errors.c
+SRCS = srcs/ft_pipex_bonus.c srcs/ft_free_bonus.c srcs/ft_create_pipe_bonus.c srcs/ft_pipex_utils_bonus.c \
+srcs/ft_errors_bonus.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,11 +6,12 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:03:47 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/02 15:41:14 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/15 08:23:42 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "../libft.h"
 
 static int	check_errors(int fd, char **stored_lines)
 {
@@ -60,7 +61,7 @@ static char	*update_stored_lines(char **stored_lines, char *newline_position)
 		length = ft_strlen(newline_position + 1);
 		new_stored_lines = allocate_string(length);
 		if (new_stored_lines)
-			ft_strlcpy(new_stored_lines, newline_position + 1, length + 1);
+			gnl_strlcpy(new_stored_lines, newline_position + 1, length + 1);
 	}
 	else
 		new_stored_lines = NULL;
@@ -82,7 +83,7 @@ static char	*extract_line(char **stored_lines)
 	line = allocate_string(length);
 	if (!line)
 		return (NULL);
-	ft_strlcpy(line, *stored_lines, length + 1);
+	gnl_strlcpy(line, *stored_lines, length + 1);
 	*stored_lines = update_stored_lines(stored_lines, newline_position);
 	return (line);
 }
@@ -103,5 +104,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	line = extract_line(&stored_lines);
+	if (!stored_lines || *stored_lines == '\0')
+	{
+		free(stored_lines);
+		stored_lines = NULL;
+	}
 	return (line);
 }

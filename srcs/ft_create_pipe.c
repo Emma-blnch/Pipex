@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/26 12:44:14 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/26 15:18:30 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	execute_command(t_pipe_args *args, int infile, int outfile)
 		perror_exit("Error: dup2 failed for infile");
 	if (dup2(outfile, STDOUT_FILENO) == -1)
 		perror_exit("Error: dup2 failed for outfile");
+	close(args->pipe_fd[0]);
+	close(args->pipe_fd[1]);
 	close(infile);
 	close(outfile);
-	//close(args->pipe_fd[0]);
-	//close(args->pipe_fd[1]);
 	execve(args->path_cmd, args->cmd, args->envp);
 	perror("Error: execve failed");
 	exit(127);
@@ -84,20 +84,18 @@ void	launch_process(t_pipe_args *args, int infile, int outfile,
 
 void	create_pipe(t_pipe_args *args)
 {
-	int	pipe_fd[2];
+	//int	pipe_fd[2];
 	int	infile;
 	int	outfile;
 
-	if (pipe(pipe_fd) == -1)
+	if (pipe(args->pipe_fd) == -1)
 		perror_exit("Error: Pipe creation failed");
 	infile = open_file(args->file1, 0, args);
-	//args->pipe_fd[0] = infile;
-	launch_process(args, infile, pipe_fd[1], 1);
-	close(pipe_fd[1]);
+	launch_process(args, infile, args->pipe_fd[1], 1);
+	close(args->pipe_fd[1]);
 	outfile = open_file(args->file2, 1, args);
-	//args->pipe_fd[1] = outfile;
-	launch_process(args, pipe_fd[0], outfile, 0);
-	close(pipe_fd[0]);
+	launch_process(args, args->pipe_fd[0], outfile, 0);
+	close(args->pipe_fd[0]);
 	wait(NULL);
 	wait(NULL);
 	close(infile);
