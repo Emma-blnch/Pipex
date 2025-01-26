@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/26 12:00:46 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/26 12:41:19 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_pipe_args
 	char	*path_cmd1;
 	char	*file2;
 	char	**envp;
+	int		pipe_fd[2];
 }	t_pipe_args;
 
 // Main

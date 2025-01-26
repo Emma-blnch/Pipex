@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/26 12:01:05 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/26 12:44:14 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	execute_command(t_pipe_args *args, int infile, int outfile)
 		perror_exit("Error: dup2 failed for outfile");
 	close(infile);
 	close(outfile);
+	//close(args->pipe_fd[0]);
+	//close(args->pipe_fd[1]);
 	execve(args->path_cmd, args->cmd, args->envp);
 	perror("Error: execve failed");
 	exit(127);
@@ -89,9 +91,11 @@ void	create_pipe(t_pipe_args *args)
 	if (pipe(pipe_fd) == -1)
 		perror_exit("Error: Pipe creation failed");
 	infile = open_file(args->file1, 0, args);
+	//args->pipe_fd[0] = infile;
 	launch_process(args, infile, pipe_fd[1], 1);
 	close(pipe_fd[1]);
 	outfile = open_file(args->file2, 1, args);
+	//args->pipe_fd[1] = outfile;
 	launch_process(args, pipe_fd[0], outfile, 0);
 	close(pipe_fd[0]);
 	wait(NULL);
