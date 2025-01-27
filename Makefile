@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+         #
+#    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2025/01/26 16:49:38 by ema_blnch        ###   ########.fr        #
+#    Updated: 2025/01/27 09:26:59 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 MAKEFLAGS += --no-print-directory
+
 $(VERBOSE).SILENT:
 
 LIBFT_DIR = libft

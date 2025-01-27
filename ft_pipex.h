@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/26 16:49:07 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/01/27 09:26:50 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ void	init_args(t_pipe_args *args, char **argv, char **envp);
 void	launch_process(t_pipe_args *args, int infile, int outfile,
 			int is_first_cmd);
 void	create_pipe(t_pipe_args *args);
-void	execute_command(t_pipe_args *args, int infile, int outfile);
 void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd);
+
+// Command
+void	execute_command(t_pipe_args *args, int infile, int outfile);
 
 // Get path
 char	*get_path(const char *cmd, char **envp);
