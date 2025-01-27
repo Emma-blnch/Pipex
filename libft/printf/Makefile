@@ -4,6 +4,9 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
+MAKEFLAGS += --no-print-directory
+$(VERBOSE).SILENT:
+
 SRCS = ft_printf.c \
        srcs/ft_put_unsigned.c \
        srcs/ft_printf_putchar.c \

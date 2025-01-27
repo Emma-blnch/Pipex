@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/26 12:04:27 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/27 09:14:50 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	init_args(t_pipe_args *args, char **argv, char **envp)
 	args->envp = envp;
 	if (!args->cmd1 || !args->cmd2)
 	{
-		free_split(args->cmd1);
-		free_split(args->cmd2);
+		//free_split(args->cmd1);
+		//free_split(args->cmd2);
+		free_args(args);
 		perror_exit("Error: Command parsing failed");
 	}
 	args->path_cmd1 = get_path(args->cmd1[0], envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/26 15:18:30 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/01/27 09:13:06 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd)
 	{
 		write(STDERR_FILENO, args->cmd[0], ft_strlen(args->cmd[0]));
 		write(STDERR_FILENO, ": command not found\n", 20);
-		free_split(args->cmd);
+		close(args->pipe_fd[1]);
+		close(args->pipe_fd[0]);
+		close(infile);
+		close(outfile);
+		free_args(args);
 		exit(127);
 	}
 	execute_command(args, infile, outfile);
@@ -55,11 +59,15 @@ int	open_file(char *file, int in_or_out, t_pipe_args *args)
 
 	if (in_or_out == 0)
 		result = open(file, O_RDONLY, 0777);
-	if (in_or_out == 1)
+	else if (in_or_out == 1)
 		result = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		result = -1;
 	if (result == -1)
 	{
 		perror(file);
+		close(args->pipe_fd[1]);
+		close(args->pipe_fd[0]);
 		free_args(args);
 		exit(EXIT_FAILURE);
 	}
@@ -80,11 +88,14 @@ void	launch_process(t_pipe_args *args, int infile, int outfile,
 			perror_exit("Error: Invalid file descriptor");
 		child(args, infile, outfile, is_first_cmd);
 	}
+	if (is_first_cmd)
+		close(infile);
+	else
+		close(outfile);
 }
 
 void	create_pipe(t_pipe_args *args)
 {
-	//int	pipe_fd[2];
 	int	infile;
 	int	outfile;
 

@@ -1,2 +1,0 @@
-checker avec valgrind --leak-check=full --track-fds=yes ./pipex infile "" "" outfile
-	pour voir si tous les fichiers sont bien fermés
