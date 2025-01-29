@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 12:11:39 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:14:19 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_pipex.h"
+#include "ft_pipex.h"
 
 void	execute_command(t_pipe_args *args, int infile, int outfile)
 {
@@ -63,10 +63,17 @@ int	open_file(char *file, int in_or_out, t_pipe_args *args)
 {
 	int	result;
 
+	if (args->is_heredoc && in_or_out == INFILE)
+		return (args->pipe_fd[0]);
 	if (in_or_out == INFILE)
 		result = open(file, O_RDONLY);
 	else if (in_or_out == OUTFILE)
-		result = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	{
+		if (args->is_heredoc)
+			result = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		else
+			result = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	}
 	else
 		result = -1;
 	if (result == -1)
@@ -102,12 +109,19 @@ void	launch_process(t_pipe_args *args, int infile, int outfile,
 
 void	create_pipe(t_pipe_args *args)
 {
-	int	infile;
+	int	infile = 0;
 	int	outfile;
 
+	if (args->is_heredoc)
+	{
+		handle_here_doc(args, args->limiter);
+		infile = args->pipe_fd[0];
+	}
+	else
+		infile = open_file(args->file1, INFILE, args);
 	if (pipe(args->pipe_fd) == -1)
 		perror_exit("Error: Pipe creation failed");
-	infile = open_file(args->file1, INFILE, args);
+	//infile = open_file(args->file1, INFILE, args);
 	launch_process(args, infile, args->pipe_fd[1], 1);
 	close(args->pipe_fd[1]);
 	outfile = open_file(args->file2, OUTFILE, args);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:05:10 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 11:41:40 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:35:10 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_pipex.h"
+#include "ft_pipex.h"
 
 void	perror_exit(const char *message)
 {
