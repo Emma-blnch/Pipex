@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 12:05:26 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/26 12:05:28 by eblancha         ###   ########.fr       */
+/*   Created: 2025/01/29 11:27:47 by eblancha          #+#    #+#             */
+/*   Updated: 2025/01/29 11:31:38 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_pipex.h"
-
-void	free_args(t_pipe_args *args)
-{
-	if (args->path_cmd1)
-		free(args->path_cmd1);
-	if (args->path_cmd2)
-		free(args->path_cmd2);
-	if (args->cmd1)
-		free_split(args->cmd1);
-	if (args->cmd2)
-		free_split(args->cmd2);
-}
+#include "libft.h"
 
 void	free_split(char **split)
 {

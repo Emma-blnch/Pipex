@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/27 09:26:50 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:28:20 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <string.h>
+
+# define INFILE 1
+# define OUTFILE 2
 
 //struct
 typedef struct s_pipe_args
@@ -61,6 +64,7 @@ void	execute_command(t_pipe_args *args, int infile, int outfile);
 // Get path
 char	*get_path(const char *cmd, char **envp);
 char	*build_full_path(const char *path, const char *cmd);
+char	*find_path(const char *cmd, char **envp);
 
 // Free
 void	free_split(char **split);

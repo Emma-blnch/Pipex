@@ -6,7 +6,7 @@
 #    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/09 15:22:11 by eblancha          #+#    #+#              #
-#    Updated: 2025/01/27 08:35:10 by eblancha         ###   ########.fr        #
+#    Updated: 2025/01/29 11:07:39 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c f
        ft_itoa.c ft_strmapi.c ft_striteri.c printf/ft_printf.c printf/srcs/ft_printf_itoa.c \
        printf/srcs/ft_put_unsigned.c printf/srcs/ft_printf_putchar.c printf/srcs/ft_put_hexadecimal.c \
        printf/srcs/ft_printf_putnbr.c printf/srcs/ft_printf_putstr.c printf/srcs/ft_printf_strlen.c \
-       get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+       get_next_line/get_next_line.c get_next_line/get_next_line_utils.c ft_free_split.c
 
 SRCS_BONUS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
 	     ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
@@ -38,12 +38,10 @@ SRCS_ALL = $(SRCS) $(SRCS_BONUS)
 
 OBJS_ALL = $(SRCS_ALL:.c=.o)
 
-#INC = printf get_next_line
+all : $(NAME)
 
 .c.o :
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-
-all : $(NAME)
 
 $(NAME): $(OBJS)
 	ar rsc $(NAME) $(OBJS)

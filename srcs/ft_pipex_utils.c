@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/27 09:14:50 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:27:29 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	init_args(t_pipe_args *args, char **argv, char **envp)
 	args->envp = envp;
 	if (!args->cmd1 || !args->cmd2)
 	{
-		//free_split(args->cmd1);
-		//free_split(args->cmd2);
 		free_args(args);
 		perror_exit("Error: Command parsing failed");
 	}
@@ -42,7 +40,7 @@ char	*build_full_path(const char *path, const char *cmd)
 	return (full_path);
 }
 
-char	*get_path(const char *cmd, char **envp)
+char	*find_path(const char *cmd, char **envp)
 {
 	char	**paths;
 	char	*full_path;
@@ -69,4 +67,30 @@ char	*get_path(const char *cmd, char **envp)
 	}
 	free_split(paths);
 	return (NULL);
+}
+
+char	*get_path(const char *cmd, char **envp)
+{
+	if (ft_strchr(cmd, '/') != NULL)
+	{
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		else
+			return (NULL);
+	}
+	else
+		return (find_path(cmd, envp));
+}
+
+// Free
+void	free_args(t_pipe_args *args)
+{
+	if (args->path_cmd1)
+		free(args->path_cmd1);
+	if (args->path_cmd2)
+		free(args->path_cmd2);
+	if (args->cmd1)
+		free_split(args->cmd1);
+	if (args->cmd2)
+		free_split(args->cmd2);
 }

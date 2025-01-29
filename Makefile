@@ -6,7 +6,7 @@
 #    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2025/01/27 09:26:59 by eblancha         ###   ########.fr        #
+#    Updated: 2025/01/29 11:17:15 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,19 +17,17 @@ CFLAGS = -Wall -Wextra -Werror
 
 MAKEFLAGS += --no-print-directory
 
-$(VERBOSE).SILENT:
-
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c srcs/ft_free.c srcs/ft_errors.c
+SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c srcs/ft_errors.c
 
 OBJS = $(SRCS:.c=.o)
 
+all: $(LIBFT) $(NAME)
+
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-
-all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJS) 
 	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lm -o $(NAME)

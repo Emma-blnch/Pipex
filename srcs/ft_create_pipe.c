@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/27 09:13:06 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:10:17 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	open_file(char *file, int in_or_out, t_pipe_args *args)
 {
 	int	result;
 
-	if (in_or_out == 0)
-		result = open(file, O_RDONLY, 0777);
-	else if (in_or_out == 1)
+	if (in_or_out == INFILE)
+		result = open(file, O_RDONLY);
+	else if (in_or_out == OUTFILE)
 		result = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		result = -1;
@@ -101,10 +101,10 @@ void	create_pipe(t_pipe_args *args)
 
 	if (pipe(args->pipe_fd) == -1)
 		perror_exit("Error: Pipe creation failed");
-	infile = open_file(args->file1, 0, args);
+	infile = open_file(args->file1, INFILE, args);
 	launch_process(args, infile, args->pipe_fd[1], 1);
 	close(args->pipe_fd[1]);
-	outfile = open_file(args->file2, 1, args);
+	outfile = open_file(args->file2, OUTFILE, args);
 	launch_process(args, args->pipe_fd[0], outfile, 0);
 	close(args->pipe_fd[0]);
 	wait(NULL);

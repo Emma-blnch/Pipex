@@ -18,10 +18,10 @@ SRCS = ft_printf.c \
 
 OBJS = $(SRCS:.c=.o)
 
+all : $(NAME)
+
 .c.o :
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-
-all : $(NAME)
 
 $(NAME): $(OBJS)
 	ar rsc $(NAME) $(OBJS)
