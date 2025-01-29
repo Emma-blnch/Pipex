@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:05:10 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/26 12:05:13 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:41:40 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	perror_exit(const char *message)
 		perror(message);
 	else
 		write(STDERR_FILENO, message, ft_strlen(message));
-	errno = 0;
+	//errno = 0;
 	exit(EXIT_FAILURE);
 }
 
@@ -28,6 +28,6 @@ int	perror_return(const char *message, int return_value)
 		perror(message);
 	else
 		write(STDERR_FILENO, message, ft_strlen(message));
-	errno = 0;
+	//errno = 0;
 	return (return_value);
 }

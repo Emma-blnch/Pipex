@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 11:27:29 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:13:21 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_args(t_pipe_args *args, char **argv, char **envp)
 	args->cmd1 = ft_split(argv[2], ' ');
 	args->cmd2 = ft_split(argv[3], ' ');
 	args->envp = envp;
+	args->exit_code = 0;
 	if (!args->cmd1 || !args->cmd2)
 	{
 		free_args(args);

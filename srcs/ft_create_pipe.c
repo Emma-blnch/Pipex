@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 11:10:17 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:11:39 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ void	execute_command(t_pipe_args *args, int infile, int outfile)
 	close(args->pipe_fd[1]);
 	close(infile);
 	close(outfile);
-	execve(args->path_cmd, args->cmd, args->envp);
-	perror("Error: execve failed");
-	exit(127);
+	if (execve(args->path_cmd, args->cmd, args->envp) == -1)
+	{
+		perror("Error: execve failed");
+		if (errno == EACCES)
+			args->exit_code = 126;
+		else
+			args->exit_code = 127;
+		exit(args->exit_code);
+	}
 }
 
 void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd)
@@ -69,7 +75,7 @@ int	open_file(char *file, int in_or_out, t_pipe_args *args)
 		close(args->pipe_fd[1]);
 		close(args->pipe_fd[0]);
 		free_args(args);
-		exit(EXIT_FAILURE);
+		exit(126);
 	}
 	return (result);
 }
@@ -107,8 +113,6 @@ void	create_pipe(t_pipe_args *args)
 	outfile = open_file(args->file2, OUTFILE, args);
 	launch_process(args, args->pipe_fd[0], outfile, 0);
 	close(args->pipe_fd[0]);
-	wait(NULL);
-	wait(NULL);
 	close(infile);
 	close(outfile);
 }
