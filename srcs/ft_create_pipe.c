@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 12:11:39 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:55:13 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,10 @@ int	open_file(char *file, int in_or_out, t_pipe_args *args)
 		result = -1;
 	if (result == -1)
 	{
-		perror(file);
+		//perror(file);
 		close(args->pipe_fd[1]);
 		close(args->pipe_fd[0]);
 		free_args(args);
-		exit(126);
 	}
 	return (result);
 }
@@ -85,15 +84,21 @@ void	launch_process(t_pipe_args *args, int infile, int outfile,
 {
 	int	pid;
 
+	if (infile < 0)
+	{
+		perror(args->file1);
+		exit(0);
+	}
+	if (outfile < 0)
+	{
+		perror(args->file2);
+		exit(1);
+	}
 	pid = fork();
 	if (pid == -1)
 		perror_exit("Error: Fork creation failed");
 	if (pid == 0)
-	{
-		if (infile < 0 || outfile < 0)
-			perror_exit("Error: Invalid file descriptor");
 		child(args, infile, outfile, is_first_cmd);
-	}
 	if (is_first_cmd)
 		close(infile);
 	else

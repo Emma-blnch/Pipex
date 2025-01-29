@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 11:44:55 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:45:47 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <errno.h>
 # include <string.h>
 
-# define INFILE 1
-# define OUTFILE 2
+# define INFILE 0
+# define OUTFILE 1
 
 //struct
 typedef struct s_pipe_args
@@ -40,6 +40,7 @@ typedef struct s_pipe_args
 	char	**envp;
 	int		pipe_fd[2];
 	int		exit_code;
+	int		is_heredoc;
 }	t_pipe_args;
 
 // Main
