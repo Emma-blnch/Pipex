@@ -6,14 +6,14 @@
 /*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 15:16:23 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/01/29 16:50:09 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PIPEX_H
 # define FT_PIPEX_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -30,17 +30,16 @@
 typedef struct s_pipe_args
 {
 	char	*file1;
-	char	*path_cmd;
-	char	**cmd;
-	char	*path_cmd2;
-	char	**cmd2;
-	char	**cmd1;
-	char	*path_cmd1;
 	char	*file2;
+	char	***cmds;
+	char	**paths_cmds;
 	char	**envp;
-	int		pipe_fd[2];
+	int		**pipes;
+	int		nb_cmds;
 	int		exit_code;
 	int		is_heredoc;
+	int		pipe_fd[2];
+	char	*limiter;
 }	t_pipe_args;
 
 // Main
@@ -52,11 +51,11 @@ void	perror_exit(const char *message);
 
 // Init
 int		open_file(char *file, int in_or_out, t_pipe_args *args);
-void	init_args(t_pipe_args *args, char **argv, char **envp);
+void	init_args(t_pipe_args *args, int argc, char **argv, char **envp);
 
 // Process
-void	launch_process(t_pipe_args *args, int infile, int outfile,
-			int is_first_cmd);
+//void	launch_process(t_pipe_args *args, int infile, int outfile,
+//			int is_first_cmd);
 void	create_pipe(t_pipe_args *args);
 void	child(t_pipe_args *args, int infile, int outfile, int is_first_cmd);
 
@@ -74,5 +73,9 @@ char	*find_path(const char *cmd, char **envp);
 // Free
 void	free_split(char **split);
 void	free_args(t_pipe_args *args);
+
+void	cmd_handle(t_pipe_args *args, char **argv, char **envp);
+void	create_pipes(t_pipe_args *args);
+int	launch_process(t_pipe_args *args, int index);
 
 #endif
