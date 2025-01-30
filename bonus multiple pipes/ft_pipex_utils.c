@@ -6,7 +6,7 @@
 /*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/30 12:18:16 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/01/30 14:42:05 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	open_file(char *argv, int mode)
 	else if (mode == 2)
 		file = open(argv, O_RDONLY);
 	if (file == -1)
-		perror_exit(argv);
+	{
+		perror(argv);
+		exit(0);
+	}
 	return (file);
 }
 
@@ -71,7 +74,7 @@ void	execute(char *argv, char **envp)
 	}
 }
 
-void	child_process(char *argv, char **envp)
+pid_t	child_process(char *argv, char **envp)
 {
 	pid_t	pid;
 	int		pipe_fd[2];
@@ -95,50 +98,6 @@ void	child_process(char *argv, char **envp)
 		if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
 			perror_exit("Error: dup2 failed for pipe read");
 		close(pipe_fd[0]);
-		waitpid(pid, NULL, 0);
 	}
+	return (pid);
 }
-
-// char	*get_path(char *cmd, char **envp)
-// {
-// 	if (ft_strchr(cmd, '/') != NULL)
-// 	{
-// 		if (access(cmd, X_OK) == 0)
-// 			return (ft_strdup(cmd));
-// 		else
-// 			return (NULL);
-// 	}
-// 	else
-// 		return (find_path(cmd, envp));
-// }
-
-// char	*find_path(char *cmd, char **envp)
-// {
-// 	char	**paths;
-// 	char	*path;
-// 	int		i;
-// 	char	*part_path;
-
-// 	i = 0;
-// 	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
-// 		i++;
-// 	if (!envp[i])
-// 		return (NULL);
-// 	paths = ft_split(envp[i] + 5, ':');
-// 	i = 0;
-// 	while (paths[i])
-// 	{
-// 		part_path = ft_strjoin(paths[i], "/");
-// 		path = ft_strjoin(part_path, cmd);
-// 		free(part_path);
-// 		if (access(path, X_OK) == 0)
-// 		{
-// 			free_split(paths);
-// 			return (path);
-// 		}
-// 		free(path);
-// 		i++;
-// 	}
-// 	free_split(paths);
-// 	return (NULL);
-// }

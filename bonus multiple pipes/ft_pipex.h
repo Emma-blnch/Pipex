@@ -6,7 +6,7 @@
 /*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/30 12:18:05 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/01/30 14:32:44 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,9 @@
 //struct
 typedef struct s_pipe_args
 {
-	char	*file1;
-	char	*file2;
 	char	**envp;
-	char	***cmds;
-	char	**paths_cmds;
-	int		nb_cmds;
-	int		pipe_fd[2];
-	int		is_heredoc;
-	char	*limiter;
+	int		arg_nbr;
+	int		exit_code;
 }	t_pipe_args;
 
 // Main
@@ -45,8 +39,9 @@ int		main(int argc, char **argv, char **envp);
 
 // Utils
 int		open_file(char *argv, int mode);
-void	child_process(char *argv, char **envp);
+pid_t	child_process(char *argv, char **envp);
 void	execute(char *argv, char **envp);
+void	execute_pipeline(t_pipe_args *args, int argc, char **argv, int fileout);
 
 // Find path
 char	*find_path(char *cmd, char **envp);
@@ -60,5 +55,6 @@ void	handle_here_doc(char *limiter);
 // Errors
 void	usage_return(void);
 void	perror_exit(const char *message);
+void	check_filein(int *filein, char **argv);
 
 #endif

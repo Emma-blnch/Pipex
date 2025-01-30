@@ -50,4 +50,3 @@ void	handle_here_doc(char *limiter)
 		perror_exit("Error: Pipe creation failed for here_doc");
 	child_here_doc(pipe_fd, limiter);
 }
-

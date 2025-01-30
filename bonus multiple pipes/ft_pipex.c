@@ -6,83 +6,26 @@
 /*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:02 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/30 12:20:43 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/01/30 14:41:40 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-// void	handle_here_doc(char *limiter)
-// {
-// 	pid_t	reader;
-// 	int		pipe_fd[2];
-// 	char	*line;
-
-// 	if (pipe(pipe_fd) == -1)
-// 		perror_exit("Error: Pipe creation failed for here_doc");
-// 	reader = fork();
-// 	if (reader == -1)
-// 		perror_exit("Error: Fork failed for here_doc");
-// 	if (reader == 0)
-// 	{
-// 		close(pipe_fd[0]);
-// 		write(STDOUT_FILENO, "here_doc> ", 10);
-// 		while ((line = get_next_line(STDIN_FILENO)))
-// 		{
-// 			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 && line[ft_strlen(limiter)] == '\n')
-// 			{
-// 				free(line);
-// 				break ;
-// 			}
-// 			write(pipe_fd[1], line, ft_strlen(line));
-// 			free(line);
-// 			write(STDOUT_FILENO, "here_doc> ", 10);
-// 		}
-// 		close(pipe_fd[1]);
-// 		exit(EXIT_SUCCESS);
-// 	}
-// 	else
-// 	{
-// 		close(pipe_fd[1]);
-// 		if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-// 			perror_exit("Error: dup2 failed for here_doc");
-// 		close(pipe_fd[0]);
-// 		wait(NULL);
-// 	}
-// }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	int	i;
-// 	int	filein;
-// 	int	fileout;
-
-// 	if (argc >= 5)
-// 	{
-// 		if (ft_strncmp(argv[1], "here_doc", 8) == 0)
-// 		{
-// 			i = 3;
-// 			fileout = open_file(argv[argc - 1], 0);
-// 			handle_here_doc(argv[2]);
-// 		}
-// 		else
-// 		{
-// 			i = 2;
-// 			fileout = open_file(argv[argc - 1], 1);
-// 			filein = open_file(argv[1], 2);
-// 			if (dup2(filein, STDIN_FILENO) == -1)
-// 				perror_exit("Error: dup2 failed for infile");
-// 			close(filein);
-// 		}
-// 		while (i < argc - 2)
-// 			child_process(argv[i++], envp);
-// 		if (dup2(fileout, STDOUT_FILENO) == -1)
-// 			perror_exit("Error: dup2 failed for outfile");
-// 		close(fileout);
-// 		execute(argv[argc - 2], envp);
-// 	}
-// 	usage_return();
-// }
+void	check_filein(int *filein, char **argv)
+{
+	if (*filein == -1)
+	{
+		perror(argv[1]);
+		*filein = STDIN_FILENO;
+	}
+	if (*filein != STDIN_FILENO)
+	{
+		if (dup2(*filein, STDIN_FILENO) == -1)
+			perror_exit("Error: dup2 failed for infile");
+		close(*filein);
+	}
+}
 
 int	setup_here_doc(char **argv)
 {
@@ -90,42 +33,51 @@ int	setup_here_doc(char **argv)
 	return (3);
 }
 
-int	setup_files(int argc, char **argv, int *fileout)
+void	execute_pipeline(t_pipe_args *args, int argc, char **argv, int fileout)
 {
-	int	filein;
+	int		status;
+	pid_t	last_pid;
 
-	*fileout = open_file(argv[argc - 1], 1);
-	filein = open_file(argv[1], 2);
-	if (dup2(filein, STDIN_FILENO) == -1)
-		perror_exit("Error: dup2 failed for infile");
-	close(filein);
-	return (2);
-}
-
-void	execute_pipeline(int argc, char **argv, char **envp, int fileout)
-{
-	int	i;
-
-	i = setup_files(argc, argv, &fileout);
-	while (i < argc - 2)
-		child_process(argv[i++], envp);
+	while (args->arg_nbr < argc - 2)
+	{
+		last_pid = child_process(argv[args->arg_nbr], args->envp);
+		args->arg_nbr++;
+	}
 	if (dup2(fileout, STDOUT_FILENO) == -1)
 		perror_exit("Error: dup2 failed for outfile");
 	close(fileout);
-	execute(argv[argc - 2], envp);
+	last_pid = child_process(argv[argc - 2], args->envp);
+	while (waitpid(last_pid, &status, 0) > 0)
+	{
+		if (WIFEXITED(status))
+			args->exit_code = WEXITSTATUS(status);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	fileout = 0;
+	int	filein;
+	int	fileout;
+	t_pipe_args	args;
 
 	if (argc >= 5)
 	{
+		args.exit_code = 0;
+		args.envp = envp;
 		if (ft_strncmp(argv[1], "here_doc", 8) == 0)
-			setup_here_doc(argv);
+		{
+			fileout = open_file(argv[argc - 1], 0);
+			args.arg_nbr = setup_here_doc(argv);
+		}
 		else
-			setup_files(argc, argv, &fileout);
-		execute_pipeline(argc, argv, envp, fileout);
+		{
+			args.arg_nbr = 2;
+			fileout = open_file(argv[argc - 1], 1);
+			filein = open_file(argv[1], 2);
+			check_filein(&filein, argv);
+		}
+		execute_pipeline(&args, argc, argv, fileout);
 	}
 	usage_return();
+	return (args.exit_code);
 }

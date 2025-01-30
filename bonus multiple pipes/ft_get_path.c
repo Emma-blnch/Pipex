@@ -25,10 +25,7 @@ char	*search_executable(char *cmd, char **paths)
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
 		if (access(path, X_OK) == 0)
-		{
-			free_split(paths);
 			return (path);
-		}
 		free(path);
 		i++;
 	}
