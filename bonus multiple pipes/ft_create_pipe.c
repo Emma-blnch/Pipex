@@ -6,7 +6,7 @@
 /*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 16:49:44 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/01/30 10:44:47 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,72 +87,88 @@
 // 	return (result);
 // }
 
-int	launch_process(t_pipe_args *args, int index)
+void launch_process(t_pipe_args *args, int index, int infile, int outfile)
 {
-	int	pid;
-	int	infile;
-	int	outfile;
+    int pid;
+    int i;
 
-	pid = fork();
-	if (pid == -1)
-		perror_exit("Error: Fork failed");
+    pid = fork();
+    if (pid == -1)
+        perror_exit("Error: Fork failed");
+    if (pid == 0)
+    {
+        if (dup2(infile, STDIN_FILENO) == -1)
+            perror_exit("Error: dup2 failed for infile");
+        if (dup2(outfile, STDOUT_FILENO) == -1)
+            perror_exit("Error: dup2 failed for outfile");
+        i = 0;
+        while (i < 2)
+        {
+            close(args->pipes[i][0]);
+            close(args->pipes[i][1]);
+            i++;
+        }
 
-	if (pid == 0)
-	{
-		// Définir l'entrée et la sortie du processus
-		infile = (index == 0) ? 
-			(args->is_heredoc ? args->pipes[0][0] : open(args->file1, O_RDONLY))
-			: args->pipes[index - 1][0];
-		
-		outfile = (index == args->nb_cmds - 1) ? 
-			open(args->file2, O_WRONLY | O_CREAT | O_TRUNC, 0644) 
-			: args->pipes[index][1];
+        if (!args->paths_cmds[index])
+        {
+            ft_putstr_fd(args->cmds[index][0], STDERR_FILENO);
+            ft_putstr_fd(": command not found\n", STDERR_FILENO);
+            exit(127);
+        }
 
-		// Redirection des fichiers vers stdin/stdout
-		if (dup2(infile, STDIN_FILENO) == -1 || dup2(outfile, STDOUT_FILENO) == -1)
-			perror_exit("Error: dup2 failed");
-
-		// Fermer les pipes inutilisés
-		close(infile);
-		close(outfile);
-
-		// Vérification du path de la commande
-		if (!args->paths_cmds[index])
-		{
-			ft_putstr_fd(args->cmds[index][0], STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			exit(127);
-		}
-
-		// Exécuter la commande
-		if (execve(args->paths_cmds[index], args->cmds[index], args->envp) == -1)
-		{
-			perror(args->cmds[index][0]);
-			if (errno == EACCES)
-				exit(126);
-			exit(127);
-		}
-	}
-	return (pid); // ✅ On retourne le PID du processus enfant
+        if (execve(args->paths_cmds[index], args->cmds[index], args->envp) == -1)
+        {
+            perror(args->cmds[index][0]);
+            if (errno == EACCES)
+                exit(126);
+            exit(127);
+        }
+    }
 }
 
-void	create_pipes(t_pipe_args *args)
-{
-	int	i;
 
-	args->pipes = malloc(sizeof(int *) * (args->nb_cmds - 1));
-	if (!args->pipes)
-		perror_exit("Error: Memory allocation failed");
-	i = 0;
-	while (i < args->nb_cmds - 1)
-	{
-		args->pipes[i] = malloc(sizeof(int) * 2);
-		if (!args->pipes[i] || pipe(args->pipes[i]) == -1)
-		{
-			//free_split(args->pipes);
-			perror_exit("Error: Pipe creation failed");
-		}
-		i++;
-	}
+void create_pipe(t_pipe_args *args)
+{
+    int i;
+    int infile;
+    int outfile;
+    int current_pipe;
+
+    if (args->is_heredoc)
+    {
+        handle_here_doc(args, args->limiter);
+        infile = args->pipes[0][0];
+    }
+    else
+    {
+        infile = open(args->file1, O_RDONLY);
+        if (infile == -1)
+            perror_exit("Error: Unable to open input file");
+    }
+    i = 0;
+    current_pipe = 0;
+    while (i < args->nb_cmds)
+    {
+        if (i < args->nb_cmds - 1)
+        {
+            if (pipe(args->pipes[current_pipe]) == -1)
+                perror_exit("Error: Pipe creation failed");
+        }
+        if (i == args->nb_cmds - 1)
+            outfile = open(args->file2, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        else
+            outfile = args->pipes[current_pipe][1];
+
+        launch_process(args, i, infile, outfile);
+        if (i > 0)
+            close(infile);
+
+        close(args->pipes[current_pipe][1]);
+        infile = args->pipes[current_pipe][0];
+        current_pipe = 1 - current_pipe;
+        i++;
+    }
+    close(infile);
 }
+
 
