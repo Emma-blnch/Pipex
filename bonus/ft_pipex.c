@@ -6,7 +6,7 @@
 /*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:02 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 15:40:22 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/01/30 11:17:15 by ema_blnch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	
 	if (argc < 5)
 		return (perror_return("Usage: ./pipex here_doc | file1 [LIMITER] cmd1 cmd2 file2", 1));
-	args.is_heredoc = ft_strncmp(argv[1], "here_doc", 9) == 0;
+	args.is_heredoc = ft_strncmp(argv[1], "here_doc", 8) == 0;
 	if (args.is_heredoc && argc < 6)
 		return (perror_exit("Usage: ./pipex here_doc LIMITER cmd1 cmd2 file"), 1);
 	init_args(&args, argv, envp);
