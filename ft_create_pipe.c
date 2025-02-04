@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 16:14:19 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/02/04 09:45:49 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	launch_process(t_pipe_args *args, int infile, int outfile,
 
 void	create_pipe(t_pipe_args *args)
 {
-	int	infile = 0;
+	int	infile;
 	int	outfile;
 
 	if (args->is_heredoc)
@@ -121,7 +121,6 @@ void	create_pipe(t_pipe_args *args)
 		infile = open_file(args->file1, INFILE, args);
 	if (pipe(args->pipe_fd) == -1)
 		perror_exit("Error: Pipe creation failed");
-	//infile = open_file(args->file1, INFILE, args);
 	launch_process(args, infile, args->pipe_fd[1], 1);
 	close(args->pipe_fd[1]);
 	outfile = open_file(args->file2, OUTFILE, args);

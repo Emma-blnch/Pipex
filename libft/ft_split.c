@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:25:20 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/09 10:07:07 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:34:21 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,29 @@ static char	*word_dup(const char *str, int start, int finish)
 	return (word);
 }
 
+static int	check_space(char const *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		while (s[i] == '\n' || s[i] == '\t' || s[i] == ' ')
+			i++;
+		if (s[i] >= 33 && s[i] <= 126)
+			return (0);
+	}
+	return (1);
+}
+
+static int	allocation(char const *s, char c, char ***split)
+{
+	*split = malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!(*split))
+		return (0);
+	return (1);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	size_t	i;
@@ -55,8 +78,9 @@ char	**ft_split(char const *s, char c)
 	int		index;
 	char	**split;
 
-	split = malloc((count_words(s, c) + 1) * sizeof(char *));
-	if (!s || !split)
+	if (check_space(s) == 1 || !s)
+		return (NULL);
+	if (!allocation(s, c, &split))
 		return (NULL);
 	i = 0;
 	j = 0;

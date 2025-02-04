@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:05:10 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/30 11:34:55 by ema_blnch        ###   ########.fr       */
+/*   Updated: 2025/02/04 11:28:07 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,21 @@ int	perror_return(const char *message, int return_value)
 		perror(message);
 	else
 		write(STDERR_FILENO, message, ft_strlen(message));
-	//errno = 0;
 	return (return_value);
+}
+
+// Free
+void	free_args(t_pipe_args *args)
+{
+	if (args)
+	{
+		if (args->path_cmd1)
+			free(args->path_cmd1);
+		if (args->path_cmd2)
+			free(args->path_cmd2);
+		if (args->cmd1)
+			free_split(args->cmd1);
+		if (args->cmd2)
+			free_split(args->cmd2);
+	}
 }

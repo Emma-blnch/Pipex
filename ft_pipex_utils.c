@@ -6,18 +6,39 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 13:10:42 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:29:49 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_pipex.h"
+#include "ft_pipex.h"
+
+static void	init(t_pipe_args *args)
+{
+	args->path_cmd1 = NULL;
+	args->path_cmd2 = NULL;
+	args->cmd1 = NULL;
+	args->cmd2 = NULL;
+	args->limiter = NULL;
+}
 
 void	init_args(t_pipe_args *args, char **argv, char **envp)
 {
 	args->file1 = argv[1];
-	args->file2 = argv[4];
-	args->cmd1 = ft_split(argv[2], ' ');
-	args->cmd2 = ft_split(argv[3], ' ');
+	init(args);
+	if (args->is_heredoc)
+	{
+		args->limiter = argv[2];
+		args->file2 = argv[5];
+		args->cmd1 = ft_split(argv[3], ' ');
+		args->cmd2 = ft_split(argv[4], ' ');
+	}
+	else
+	{
+		args->limiter = NULL;
+		args->file2 = argv[4];
+		args->cmd1 = ft_split(argv[2], ' ');
+		args->cmd2 = ft_split(argv[3], ' ');
+	}
 	args->envp = envp;
 	args->exit_code = 0;
 	if (!args->cmd1 || !args->cmd2)
@@ -81,17 +102,4 @@ char	*get_path(const char *cmd, char **envp)
 	}
 	else
 		return (find_path(cmd, envp));
-}
-
-// Free
-void	free_args(t_pipe_args *args)
-{
-	if (args->path_cmd1)
-		free(args->path_cmd1);
-	if (args->path_cmd2)
-		free(args->path_cmd2);
-	if (args->cmd1)
-		free_split(args->cmd1);
-	if (args->cmd2)
-		free_split(args->cmd2);
 }
