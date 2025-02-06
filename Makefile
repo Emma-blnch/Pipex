@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
+#    By: ema_blnch <ema_blnch@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2025/02/06 08:37:10 by eblancha         ###   ########.fr        #
+#    Updated: 2025/02/06 15:13:08 by ema_blnch        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c srcs/ft_error
 
 OBJS = $(SRCS:.c=.o)
 
-all: $(LIBFT) $(NAME)
-
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+
+all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJS) 
 	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lm -o $(NAME)
