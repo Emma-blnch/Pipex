@@ -17,8 +17,12 @@ With this project, I developed my:
 - [x] Unix system programming (using pipes to redirect flows between processes)
 
 ## 📁 **My files**
-<ins>Pipex.c</ins> : Contains the main function. Initializes arguments, checks their validity, and triggers the operations required to execute the Pipex program.
+<ins>Pipex.c</ins> : Contains the main function. Checks the arguments and triggers the operations required to execute the Pipex program.
 
-<ins>Pipex_utils.c</ins> : Manages memory, command path finding and errors.
+<ins>Pipex_utils.c</ins> : Init arguments and structure's variables and manages command path finding.
 
-<ins>Create_pipe.c</ins> : Contains the logic to create the pipe used between cmd1 and cmd2.
+<ins>Handle_heredoc.c</ins> : If a here_doc is put as the first argument allows to write in the here_doc.
+
+<ins>Create_pipe.c</ins> : Open the files, creates the pipes and execute commands.
+
+<ins>Erros.c</ins> : Contains functions for error management and that free all variables of my struct.
