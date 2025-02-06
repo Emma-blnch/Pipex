@@ -6,11 +6,11 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:07:55 by eblancha          #+#    #+#             */
-/*   Updated: 2025/02/04 09:45:49 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:16:48 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "../ft_pipex.h"
 
 void	execute_command(t_pipe_args *args, int infile, int outfile)
 {
@@ -81,8 +81,6 @@ int	open_file(char *file, int in_or_out, t_pipe_args *args)
 		perror(file);
 		close(args->pipe_fd[1]);
 		close(args->pipe_fd[0]);
-		free_args(args);
-		exit(126);
 	}
 	return (result);
 }
@@ -124,6 +122,11 @@ void	create_pipe(t_pipe_args *args)
 	launch_process(args, infile, args->pipe_fd[1], 1);
 	close(args->pipe_fd[1]);
 	outfile = open_file(args->file2, OUTFILE, args);
+	if (outfile < 0)
+	{
+		args->exit_code = 1;
+		return ;
+	}
 	launch_process(args, args->pipe_fd[0], outfile, 0);
 	close(args->pipe_fd[0]);
 	close(infile);

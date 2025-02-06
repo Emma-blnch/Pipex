@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_heredoc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblancha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 09:47:49 by eblancha          #+#    #+#             */
-/*   Updated: 2025/02/04 09:48:38 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/06 08:32:35 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "../ft_pipex.h"
 
 void	handle_here_doc(t_pipe_args *args, char *limiter)
 {

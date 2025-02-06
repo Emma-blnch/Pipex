@@ -6,7 +6,7 @@
 #    By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 11:40:31 by eblancha          #+#    #+#              #
-#    Updated: 2025/02/04 09:55:46 by eblancha         ###   ########.fr        #
+#    Updated: 2025/02/06 08:37:10 by eblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MAKEFLAGS += --no-print-directory
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS = ft_pipex.c ft_pipex_utils.c ft_create_pipe.c ft_errors.c ft_handle_heredoc.c
+SRCS = srcs/ft_pipex.c srcs/ft_pipex_utils.c srcs/ft_create_pipe.c srcs/ft_errors.c srcs/ft_handle_heredoc.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 09:30:13 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/15 14:30:09 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:22:43 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,25 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (num * sign);
+}
+
+int	ft_atoi_base(char *line)
+{
+	int		result;
+	char	c;
+
+	line += 2;
+	result = 0;
+	while (*line && *line != ' ')
+	{
+		c = ft_tolower(*line);
+		if (c >= '0' && c <= '9')
+			result = result * 16 + (c - '0');
+		else if (c >= 'a' && c <= 'f')
+			result = result * 16 + (c - 'a' + 10);
+		else
+			break ;
+		line++;
+	}
+	return (result);
 }

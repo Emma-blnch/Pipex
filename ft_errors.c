@@ -6,11 +6,11 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:05:10 by eblancha          #+#    #+#             */
-/*   Updated: 2025/02/04 11:28:07 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/06 08:32:35 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "../ft_pipex.h"
 
 void	perror_exit(const char *message)
 {

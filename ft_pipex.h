@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:44:47 by eblancha          #+#    #+#             */
-/*   Updated: 2025/02/04 09:55:41 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/06 08:35:38 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@
 typedef struct s_pipe_args
 {
 	char	*file1;
+	char	*file2;
 	char	*path_cmd;
-	char	**cmd;
+	char	*path_cmd1;
 	char	*path_cmd2;
+	char	**cmd;
 	char	**cmd2;
 	char	**cmd1;
-	char	*path_cmd1;
-	char	*file2;
 	char	**envp;
 	int		pipe_fd[2];
 	int		exit_code;

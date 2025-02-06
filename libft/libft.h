@@ -6,7 +6,7 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:44:30 by eblancha          #+#    #+#             */
-/*   Updated: 2025/01/29 11:07:28 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:20:12 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@
 # include "get_next_line/get_next_line.h"
 
 int		ft_atoi(const char *nptr);
+int		ft_atoi_base(char *line);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(char *s1, char *s2);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

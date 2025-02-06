@@ -6,25 +6,27 @@
 /*   By: eblancha <eblancha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:08:44 by eblancha          #+#    #+#             */
-/*   Updated: 2025/02/04 11:29:49 by eblancha         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:04:48 by eblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "../ft_pipex.h"
 
-static void	init(t_pipe_args *args)
+static void	init(t_pipe_args *args, char **envp)
 {
 	args->path_cmd1 = NULL;
 	args->path_cmd2 = NULL;
 	args->cmd1 = NULL;
 	args->cmd2 = NULL;
 	args->limiter = NULL;
+	args->envp = envp;
+	args->exit_code = 0;
 }
 
 void	init_args(t_pipe_args *args, char **argv, char **envp)
 {
+	init(args, envp);
 	args->file1 = argv[1];
-	init(args);
 	if (args->is_heredoc)
 	{
 		args->limiter = argv[2];
@@ -39,8 +41,6 @@ void	init_args(t_pipe_args *args, char **argv, char **envp)
 		args->cmd1 = ft_split(argv[2], ' ');
 		args->cmd2 = ft_split(argv[3], ' ');
 	}
-	args->envp = envp;
-	args->exit_code = 0;
 	if (!args->cmd1 || !args->cmd2)
 	{
 		free_args(args);
