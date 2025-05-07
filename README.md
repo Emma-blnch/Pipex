@@ -1,4 +1,8 @@
-<h1 align="center"> 💻 <strong>Pipex</strong> </h1>
+<p align="center">
+  <img src="https://github.com/ayogun/42-project-badges/blob/main/badges/pipexe.png">
+</p>
+
+# 💻 Pipex
 
 ## 🏷️ **About the project**
 > [!IMPORTANT]
